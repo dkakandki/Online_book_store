@@ -1,11 +1,29 @@
-pipeline {  
-    agent any  
-        stages {  
-       	    stage("git_checkout") {  
-           	    steps {  
-              	    echo "cloning repository" 
-              	    echo "repo cloned successfully"  
-              	    }  
-         	    } 
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out from SCM'
+	        checkout changelog: false, poll: false,
+		scm: [$class: 'GitSCM',
+		branches: [[name: '*/master']],
+		extensions: [], userRemoteConfigs: [[credentialsId: 'git',
+		url: 'https://github.com/dkakandki/Online_book_store.git']]]	
+            }
         }
-}
+        stage('BUILD + UT') {
+            steps {
+                echo 'Building and Testing'
+		sh 'mvn clean compile package'
+            }
+
+        }
+        stage('deploy') {
+            steps {
+                echo 'deploy....'
+		//sh 'mvn deploy'
+            }
+        }
+    }
+    }
