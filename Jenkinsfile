@@ -15,7 +15,7 @@ pipeline {
         stage('BUILD + UT') {
             steps {
                 echo 'Building and Testing'
-		sh 'mvn clean compile package'
+		sh 'mvn clean install package'
             }
 
         }
