@@ -7,8 +7,8 @@ pipeline {
                 echo 'Checking out from SCM'
 	        checkout changelog: false, poll: false,
 		scm: [$class: 'GitSCM',
-		branches: [[name: '*/master']],
-		extensions: [], userRemoteConfigs: [[credentialsId: 'git',
+		branches: [[name: '*/main']],
+		extensions: [], userRemoteConfigs: [[credentialsId: '',
 		url: 'https://github.com/dkakandki/Online_book_store.git']]]	
             }
         }
